@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createDocumental,deleteDocumnetal,getDocumentales} = require('../controllers/documentales.controlers')
+const {createDocumental,deleteDocumnetal,getDocumentales,getDocumental} = require('../controllers/documentales.controlers')
 
 module.exports = function () {
 	//Servicio para registro de nuevo documental
@@ -13,7 +13,7 @@ module.exports = function () {
     router.delete('/eliminar-documental' ,deleteDocumnetal);
 
     //Servicio para ver un documental
-    router.post('/documental-info',()=>{})
+    router.post('/documental-info',getDocumental);
 
 	return router;
 };

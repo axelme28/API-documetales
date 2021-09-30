@@ -80,15 +80,35 @@ exports.deleteDocumnetal = async (req = request, res = response) => {
 }
 
 exports.getDocumentales = async (req = request, res = response)=>{
-
-
-
 	try {
-		const result = await db.query(getDocumental,{
+		const queryGetDocumentales = getDocumental + ';';
+		const result = await db.query(queryGetDocumentales,{
 			type: db.QueryTypes.GET,
-		})
+		});
 		res.status(200).json(result[0]);
 	} catch (error) {
 		console.log(error);
 	}
 }
+
+exports.getDocumental = async (req = request, res = response) => {
+	
+	const {
+		idDocumental,
+	} = req.body;
+
+	try{
+		const queryGetdocumental = getDocumental + ' where documental.idDocumental = :idDocumental;';
+		const result = await db.query(queryGetdocumental,{
+			replacements: {
+				idDocumental,
+			},
+			type: db.QueryTypes.POST,
+		})
+		console.log(result);
+		// res.status.json(result[0]);
+	} catch(error){
+		console.log(error);
+	}
+}
+
