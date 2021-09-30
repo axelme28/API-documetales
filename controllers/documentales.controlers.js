@@ -1,10 +1,12 @@
 const { request, response } = require('express');
+const { type, json } = require('express/lib/response');
+const { async } = require('jshint/src/prod-params');
 const { QueryTypes } = require('sequelize');
 const db = require('../config/db.config');
 const {getClasificacion,getIdCategoria,getIdiona,getPais} = require('../helpers/getId')
-const {insertDocumental} = require('../sql/querys')
+const {insertDocumental,deleteDocumental,getDocumental} = require('../sql/querys')
 
-exports.registrarDocumental = async (req = request, res = response) => {
+exports.createDocumental = async (req = request, res = response) => {
 	//Desestructuramos las variables que vienen en el Body
 	const {
 		Nombre,
@@ -55,3 +57,38 @@ exports.registrarDocumental = async (req = request, res = response) => {
 		console.log(error);
 	}
 };
+
+exports.deleteDocumnetal = async (req = request, res = response) => {
+
+	const {
+		idDocumental,
+	} = req.body;
+
+	try {
+		const queryDeleteDocumental = deleteDocumental + 'WHERE idDocumental = :idDocumental;'
+		await db.query(queryDeleteDocumental,{
+			replacements: {
+				idDocumental,
+			},
+			type: db.QueryTypes.DELETE,
+		});
+
+		res.status(200),json({msg: true});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+exports.getDocumentales = async (req = request, res = response)=>{
+
+
+
+	try {
+		const result = await db.query(getDocumental,{
+			type: db.QueryTypes.GET,
+		})
+		res.status(200).json(result[0]);
+	} catch (error) {
+		console.log(error);
+	}
+}

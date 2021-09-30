@@ -5,39 +5,39 @@ exports.getIdCategoria = (categoria = '') => {
     switch (categoria.toLocaleLowerCase().trim()) {
         case 'biograficos':
             return(id = 1);
-        case 'sobre crímenes':
+        case 'sobrecrímenes':
             return(id = 2);
         case 'históricos':
             return(id = 3);
         case 'bélicos':
             return(id = 4);
-        case 'sobre deportes':
+        case 'sobredeportes':
             return(id  = 5);
-        case 'de música y conciertos':
+        case 'demúsicayconciertos':
             return(id = 6);
-        case 'de viajes y aventuras':
+        case 'deviajesyaventuras':
             return(id = 7);
-        case 'sobre política':
+        case 'sobrepolítica':
             return(id = 8);
         default:
             break;
     }
 }
-//TODO: problemas al insertar la categoria
-exports.getClasificacion = (categoria = '') => {
+
+exports.getClasificacion = (clasificacion = '') => {
     let id = 0;
-    switch (categoria.toLocaleLowerCase().trim()) {
-        case 'B':
+    switch (clasificacion.toLocaleLowerCase().trim()) {
+        case 'a':
             return(id = 1);
-        case 'B15':
+        case 'b15':
             return(id = 2);
-        case 'C':
+        case 'c':
             return(id = 3);
-        case 'D':
+        case 'd':
             return(id = 4);
-        case 'AA':
+        case 'aa':
             return(id = 5);
-        case 'A':
+        case 'a':
             return(id = 6);
         default:
             break;
@@ -46,12 +46,12 @@ exports.getClasificacion = (categoria = '') => {
 
 exports.getIdiona = (idioma = '') => {
     let id = 0;
-    idioma.toLowerCase().trim() === 'Ingles' ? (id = 1) : (id = 2);
+    idioma.toLowerCase().trim() === 'ingles' ? (id = 1) : (id = 2);
 	return id;
 }
 
 exports.getPais = (pais = '') =>{
     let id = 0;
-    pais.toLocaleLowerCase().trim() === 'Mexico' ? (id = 1) : (id = 2);
+    pais.toLocaleLowerCase().trim() === 'mexico' ? (id = 1) : (id = 2);
     return id;
 }
