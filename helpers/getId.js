@@ -3,7 +3,7 @@
 exports.getIdCategoria = (categoria = '') => {
     let id = 0;
     switch (categoria.toLocaleLowerCase().trim()) {
-        case 'biográficos':
+        case 'biograficos':
             return(id = 1);
         case 'sobre crímenes':
             return(id = 2);
@@ -23,7 +23,7 @@ exports.getIdCategoria = (categoria = '') => {
             break;
     }
 }
-
+//TODO: problemas al insertar la categoria
 exports.getClasificacion = (categoria = '') => {
     let id = 0;
     switch (categoria.toLocaleLowerCase().trim()) {

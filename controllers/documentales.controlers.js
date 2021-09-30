@@ -25,7 +25,7 @@ exports.registrarDocumental = async (req = request, res = response) => {
 
 	try {
 		const queryInsertDocumental = 
-		insertDocumental+'VALUES(:Nombre,:Fecha_lanzamiento,:Elenco,:Duracion,:Trama,:Productor,:Escritor,:Categoria,:Clasificacion,:Idioma,:Pais_origen,:director))';
+		insertDocumental+'VALUES(:Nombre,:Fecha_lanzamiento,:Elenco,:Duracion,:Trama,:Productor,:Escritor,:Categoria,:Clasificacion,:Idioma,:Pais_origen,:Director)';
 
 		id_clasificacion = getClasificacion(Clasificacion);
 		id_categoria = getIdCategoria(Categoria);
