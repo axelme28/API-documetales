@@ -37,8 +37,6 @@ exports.getClasificacion = (clasificacion = '') => {
             return(id = 4);
         case 'aa':
             return(id = 5);
-        case 'a':
-            return(id = 6);
         default:
             break;
     }
