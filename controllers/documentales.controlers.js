@@ -4,13 +4,13 @@ const { async } = require('jshint/src/prod-params');
 const { QueryTypes } = require('sequelize');
 const db = require('../config/db.config');
 const {getClasificacion,getIdCategoria,getIdiona,getPais} = require('../helpers/getId')
-const {insertDocumental,deleteDocumental,getDocumental} = require('../sql/querys')
+const {deleteDocumental,getDocumentales,getDocumetal,insertDocumental} = require('../sql/querys')
 
 exports.createDocumental = async (req = request, res = response) => {
 	//Desestructuramos las variables que vienen en el Body
 	const {
 		Nombre,
-		Fecha_lanzamiento, 
+		Fecha_Lanzamiento, 
 		Elenco,
 		Duracion,
 		Trama,
@@ -21,13 +21,13 @@ exports.createDocumental = async (req = request, res = response) => {
 		Idioma,
 		Pais_origen,
 		Director,
+		URL,
 	} = req.body;
 
 	let id_clasificacion,id_categoria,id_idioma,id_pais;
 
 	try {
-		const queryInsertDocumental = 
-		insertDocumental+'VALUES(:Nombre,:Fecha_lanzamiento,:Elenco,:Duracion,:Trama,:Productor,:Escritor,:Categoria,:Clasificacion,:Idioma,:Pais_origen,:Director)';
+		const queryInsertDocumental = insertDocumental;
 
 		id_clasificacion = getClasificacion(Clasificacion);
 		id_categoria = getIdCategoria(Categoria);
@@ -37,7 +37,7 @@ exports.createDocumental = async (req = request, res = response) => {
 		await db.query(queryInsertDocumental, {
 			replacements: {
 				Nombre,
-				Fecha_lanzamiento,
+				Fecha_Lanzamiento,
 				Elenco,
 				Duracion,
 				Trama,
@@ -48,11 +48,12 @@ exports.createDocumental = async (req = request, res = response) => {
 				Idioma: id_idioma,
 				Pais_origen: id_pais,
 				Director,
+				URL,
 			},
 			type: db.QueryTypes.INSERT,
 		});
 		
-		res.status(200).json({msg: true});
+		res.status(200).json({msg: "register success"});
 	} catch (error) {
 		console.log(error);
 	}
@@ -65,7 +66,9 @@ exports.deleteDocumnetal = async (req = request, res = response) => {
 	} = req.body;
 
 	try {
-		const queryDeleteDocumental = deleteDocumental + 'WHERE idDocumental = :idDocumental;'
+
+		const queryDeleteDocumental = deleteDocumental;
+
 		await db.query(queryDeleteDocumental,{
 			replacements: {
 				idDocumental,
@@ -73,15 +76,16 @@ exports.deleteDocumnetal = async (req = request, res = response) => {
 			type: db.QueryTypes.DELETE,
 		});
 
-		res.status(200),json({msg: true});
+		res.status(200).json({msg: "Delete success"});
 	} catch (error) {
 		console.log(error);
 	}
 }
 
+
 exports.getDocumentales = async (req = request, res = response)=>{
 	try {
-		const queryGetDocumentales = getDocumental + ';';
+		const queryGetDocumentales = getDocumentales;
 		const result = await db.query(queryGetDocumentales,{
 			type: db.QueryTypes.GET,
 		});
@@ -98,15 +102,16 @@ exports.getDocumental = async (req = request, res = response) => {
 	} = req.body;
 
 	try{
-		const queryGetdocumental = getDocumental + ' where documental.idDocumental = :idDocumental;';
+		const queryGetdocumental = getDocumetal;
+		
 		const result = await db.query(queryGetdocumental,{
 			replacements: {
 				idDocumental,
 			},
 			type: db.QueryTypes.POST,
 		})
-		console.log(result);
-		// res.status.json(result[0]);
+		// console.log(result);
+		res.status(200).json(result[0]);
 	} catch(error){
 		console.log(error);
 	}
