@@ -5,19 +5,19 @@ exports.getIdCategoria = (categoria = '') => {
     switch (categoria.toLocaleLowerCase().trim()) {
         case 'biograficos':
             return(id = 1);
-        case 'sobrecrímenes':
+        case 'crimenes':
             return(id = 2);
-        case 'históricos':
+        case 'historicos':
             return(id = 3);
-        case 'bélicos':
+        case 'belicos':
             return(id = 4);
-        case 'sobredeportes':
+        case 'deportes':
             return(id  = 5);
-        case 'demúsicayconciertos':
+        case 'musicayconciertos':
             return(id = 6);
-        case 'deviajesyaventuras':
+        case 'viajesyaventuras':
             return(id = 7);
-        case 'sobrepolítica':
+        case 'politica':
             return(id = 8);
         default:
             break;
