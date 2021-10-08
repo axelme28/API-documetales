@@ -94,7 +94,7 @@ CREATE TABLE `documental` (
   CONSTRAINT `fk_Documental_Clasificacion1` FOREIGN KEY (`idClasificacion`) REFERENCES `clasificacion` (`idClasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Documental_Idioma1` FOREIGN KEY (`idIdioma`) REFERENCES `idioma` (`idIdioma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Documental_Pais_origen1` FOREIGN KEY (`idPais_origen`) REFERENCES `pais_origen` (`idPais_origen`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `documental` (
 
 LOCK TABLES `documental` WRITE;
 /*!40000 ALTER TABLE `documental` DISABLE KEYS */;
-INSERT INTO `documental` VALUES (2,'redes sociales','2002-03-01','axel y alex',160,'gdzjfjhsthdzfh','erick','erick',1,1,1,1,'quentin','la que sea'),(3,'a','2001-02-03','fjs',200,'xgjsdj','adf','dhsrgh',1,1,1,1,'hrshwr','xd'),(9,'Test','1000-01-04','test',12,'tkadddn','nose','nose',3,2,2,1,'nose','https://www.youtube.com');
+INSERT INTO `documental` VALUES (2,'redes sociales','2002-03-01','axel y alex',160,'gdzjfjhsthdzfh','erick','erick',1,1,1,1,'quentin','la que sea'),(3,'a','2001-02-03','fjs',200,'xgjsdj','adf','dhsrgh',1,1,1,1,'hrshwr','xd'),(9,'Test','1000-01-04','test',12,'tkadddn','nose','nose',3,2,2,1,'nose','https://www.youtube.com'),(10,'test','0001-05-02','test, test',11,'lasmdmans','test','nose',4,2,1,1,'test','http://youtube.com'),(11,'test2','2021-10-14','test, test',120,'test','test','test',5,2,2,2,'test','kddkjdjk'),(12,'test','2021-10-14','test, test',150,'test','test','test',5,1,2,2,'test','kdkdkdkd'),(13,'test4','2021-10-05','test, test',150,'test','test','test',5,5,1,1,'test','jdjdjdjddj'),(14,'test5','2021-10-07','test, test',150,'test','test','test',1,1,2,1,'test','htkdndm'),(15,'re=dms','2021-10-13','test, test',152,'test','test','test',1,1,1,1,'test','djdjdjd'),(16,'test87','2021-10-08','test, test',150,'test','test','test',1,2,1,1,'test','https://youtube.com'),(17,'test','2021-10-20','test, test',6,'test','test','test',1,1,2,1,'test','https:youtube.com');
 /*!40000 ALTER TABLE `documental` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,87 +180,6 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping routines for database 'documentales'
---
-/*!50003 DROP PROCEDURE IF EXISTS `Eliminar_documental` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Eliminar_documental`(IN IdDoc varchar(45))
-BEGIN
-
-delete from documentales.documental where idDocumental = idDoc;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `insertar_documental` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_documental`( IN Nombre varchar(45),IN Fecha_lanzamiento date, IN
-Elenco varchar(200),IN Duracion int(11),IN Trama varchar(200),IN Productor varchar(45),
-IN Escritor varchar(45),IN idCategoria int(11),IN idClasificacion int(11),IN idIdioma int(11),IN idPais_origen int(11), IN director varchar(45), 
-IN URL varchar(200))
-BEGIN
-
-INSERT INTO documentales.documental(Nombre,Fecha_lanzamiento,Elenco,Duracion,Trama,Productor,Escritor,idCategoria,idClasificacion,idIdioma,idPais_origen,director,URL)
-VALUES (Nombre,Fecha_lanzamiento,Elenco,Duracion,Trama,Productor,Escritor,idCategoria,idClasificacion,idIdioma,idPais_origen,director,URL );
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ver_documental` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ver_documental`( IN idDoc int(11))
-BEGIN
-
-SELECT `documental`.`idDocumental`,`documental`.`Nombre`,`documental`.`Fecha_lanzamiento`,`documental`.`Elenco`,`documental`.`Duracion`,`documental`.`Trama`,`documental`.`Productor`,`documental`.`Escritor`,`categoria`.`Nombre_categoria`,`clasificacion`.`Clasificacion`,`idioma`.`Idioma`,`pais_origen`.`Pais`,`documental`.`director`,`documental`.`URL`
-FROM `documentales`.`documental` 
-INNER JOIN categoria 
-	ON(categoria.idCategoria = documental.idCategoria) 
-INNER JOIN pais_origen 
-	ON(pais_origen.idPais_origen = documental.idPais_origen) 
-INNER JOIN idioma 
-	ON(idioma.idIdioma = documental.idIdioma) 
-INNER JOIN clasificacion 
-	ON(clasificacion.idClasificacion = documental.idClasificacion)
-WHERE (idDocumental = idDoc);
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
 -- Final view structure for view `ver_documentales`
 --
 
@@ -287,4 +206,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-05 17:03:29
+-- Dump completed on 2021-10-07 22:28:06
