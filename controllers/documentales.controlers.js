@@ -119,27 +119,29 @@ exports.getDocumental = async (req = request, res = response) => {
 
 exports.logIn = async (req = request, res = response) => {
 	
-	const {user,password,} = req.body;
+	const {correo_u,contrasena_u,} = req.body;
 
 	try {
 		const queryLogIn = logIn;
 
 		const result = await db.query(queryLogIn,{
 			replacements: {
-				user
+				correo_u,
+				contrasena_u,
 			}, type: db.QueryTypes.POST
 		})
 			
 		const validpass =
-			password === result[0].password
-			? { validacion: true, mnss: resultado[0].IdUsuario }
+		contrasena_u === result[0].contrasena_u
+			? { validacion: true }
 				: {msg: 'invalid user or password'};
 
-			res.status(200).json(validpass);
+		res.status(200).json(validpass);
+		// console.log(result);
+		console.log(contrasena_u);
+		console.log(result[0].contrasena_u);
 		} catch (error) {
 			console.log(error);
 		}
-
-	
 }
 
