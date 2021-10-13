@@ -6,4 +6,4 @@ exports.deleteDocumental = 'call documentales.Eliminar_documental(:idDocumental)
 
 exports.getDocumetal = 'call documentales.ver_documental(:idDocumental);';
 
-exports.logIn = 'call documentales.`LOG-IN`(:correo_u, :contrasena_u);';
+exports.logIn = 'call documentales.`LOG-IN`(:email, :password);';
