@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createDocumental,deleteDocumnetal,getDocumentales,getDocumental} = require('../controllers/documentales.controlers')
+const {createDocumental,deleteDocumnetal,getDocumentales,getDocumental, logIn} = require('../controllers/documentales.controlers')
 
 module.exports = function () {
 	//Servicio para registro de nuevo documental
@@ -14,6 +14,9 @@ module.exports = function () {
 
     //Servicio para ver un documental
     router.post('/documental-info',getDocumental);
+
+    //servicio para LogIn
+    router.post('/log-in',logIn);
 
 	return router;
 };

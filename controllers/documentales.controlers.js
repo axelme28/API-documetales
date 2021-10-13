@@ -4,7 +4,7 @@ const { async } = require('jshint/src/prod-params');
 const { QueryTypes } = require('sequelize');
 const db = require('../config/db.config');
 const {getClasificacion,getIdCategoria,getIdiona,getPais} = require('../helpers/getId')
-const {deleteDocumental,getDocumentales,getDocumetal,insertDocumental} = require('../sql/querys')
+const {deleteDocumental,getDocumentales,getDocumetal,insertDocumental,logIn} = require('../sql/querys')
 
 exports.createDocumental = async (req = request, res = response) => {
 	//Desestructuramos las variables que vienen en el Body
@@ -115,5 +115,31 @@ exports.getDocumental = async (req = request, res = response) => {
 	} catch(error){
 		console.log(error);
 	}
+}
+
+exports.logIn = async (req = request, res = response) => {
+	
+	const {user,password,} = req.body;
+
+	try {
+		const queryLogIn = logIn;
+
+		const result = await db.query(queryLogIn,{
+			replacements: {
+				user
+			}, type: db.QueryTypes.POST
+		})
+			
+		const validpass =
+			password === result[0].password
+			? { validacion: true, mnss: resultado[0].IdUsuario }
+				: {msg: 'invalid user or password'};
+
+			res.status(200).json(validpass);
+		} catch (error) {
+			console.log(error);
+		}
+
+	
 }
 
