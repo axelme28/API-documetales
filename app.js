@@ -4,7 +4,8 @@ const cors = require('cors');
 require('dotenv').config({ path: '.env' });
 
 const db = require('./config/db.config');
-const routes = require('./routes/index.routes');
+const routesDoc = require('./routes/documentales.routes');
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -14,7 +15,9 @@ app.use(cors()); //permite tener comunicacion con cualquier otro server
 
 app.use(express.json()); //leer solicitudes en formato JSON
 
-app.use('/', routes()); //utilizar nuestrar rutas
+app.use('/', routesDoc()); //utilizar nuestrar rutas
+
+app.use('/plataforma', require('./routes/plataforma.routes')); //utilizar nuestrar rutas
 
 //inicializa el web-server y dentro tambien inicializa la conexión a la BD
 app.listen(port, () => {
