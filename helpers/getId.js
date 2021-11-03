@@ -53,3 +53,17 @@ exports.getPais = (pais = '') =>{
     pais.toLocaleLowerCase().trim() === 'mexico' ? (id = 1) : (id = 2);
     return id;
 }
+
+exports.getRole = (role = '') => {
+    let id = 0;
+    switch (role.toLocaleLowerCase().trim()) {
+        case 'administrador':
+            return(id = 1);
+        case 'alumno':
+            return(id = 2);
+        case 'profesor':
+            return(id = 3);
+        default:
+            break;
+    }
+}
