@@ -1,65 +1,132 @@
-const { QueryTypes } = require('sequelize');
-const db = require('../config/db.admin.config');
+const { type } = require("express/lib/response");
+const { async } = require("jshint/src/prod-params");
+const { QueryTypes } = require("sequelize");
+const db = require("../config/db.admin.config");
 
+const { getRole } = require("../helpers/getId");
+const {
+  queryCreateAlumno,
+  queryCreateUser,
+  queryCreateProfesor,
+  queryCreateAdmin,
+} = require("../sql/querys.plataforma");
 
-const {getRole} = require('../helpers/getId'); 
-const {queryCreateAlumno,queryCreateUser} = require('../sql/querys.plataforma')
-
-exports.altaAlumno = async (req, res) =>{
-
-    const {
-        nombre,
-        apellidoPaterno,
-        apellidoMaterno,
-        boleta,
-        email,
-        password,
-        idRol,
-        idUniversidad,
-    }= req.body;
-
-    
-
-    try {
-        const idUsuario = await altaUser(email,password,idRol,idUniversidad);
-        
-        const result = await db.sequelize.query(queryCreateAlumno, {
-            replacements: {
-                nombre,
-                apellidoPaterno,
-                apellidoMaterno,
-                boleta,
-                idUsuario,
-                idEquipo,
-            },
-            type: QueryTypes.INSERT,
-    });
-    res.status(200).json({result});
-    } catch (error) {
-        res.status(500).json({msg: 'Error al crear alumno'});
-    }
-}
-
-altaUser =  async (
+exports.altaAlumno = async (req, res) => {
+  const {
+    nombre,
+    apellidoPaterno,
+    apellidoMaterno,
+    boleta,
     email,
     password,
     idRol,
-    idUniversidad,) =>{
+    idUniversidad,
+  } = req.body;
 
-    try {
-        const idRol_ = getRole(idRol);
-        
-        const idUsu = await db.sequelize.query(queryCreateUser, {
-            replacements: {
-                email,
-                password,
-                idRol: idRol_,
-                idUniversidad,
-            },
-            type: QueryTypes.INSERT,
+  try {
+    const idUsuario = await altaUser(email, password, idRol, idUniversidad);
+
+    const result = await db.query(queryCreateAlumno, {
+      replacements: {
+        nombre,
+        apellidoMaterno,
+        idUsuario,
+        boleta,
+        apellidoPaterno,
+      },
+      type: QueryTypes.INSERT,
     });
-    return idUsu[0];
-    } catch (error) {
-        console.log(error);
-    }
-}
+
+    // console.log(result);
+    res.status(200).json({ result });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.altaProfesor = async (req, res) => {
+  const {
+    nombre,
+    apellidoMaterno,
+    noTrabajador,
+    fechaNacimiento,
+    apellidoPaterno,
+    email,
+    password,
+    idRol,
+    idUniversidad,
+  } = req.body;
+
+  try {
+    const idUsuario = await altaUser(email, password, idRol, idUniversidad);
+    await db.query(queryCreateProfesor, {
+      replacements: {
+        nombre,
+        apellidoMaterno,
+        idUsuario,
+        noTrabajador,
+        fechaNacimiento,
+        apellidoPaterno,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({ msg: "Profesor creado correctamente" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.altaAdmin = async (req, res) => {
+  const {
+    nom_admi,
+    apellido_paterno,
+    apellido_materno,
+    direccion,
+    telefono,
+    email,
+    password,
+    idRol,
+    idUniversidad,
+  } = req.body;
+
+  const idUsuario = await altaUser(email, password, idRol, idUniversidad);
+
+  try {
+    await db.query(queryCreateAdmin, {
+      replacements: {
+        nom_admi,
+        apellido_paterno,
+        apellido_materno,
+        idUsuario,
+        direccion,
+        telefono,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({ msg: "Administrador creado correctamente" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+altaUser = async (email, password, idRol, idUniversidad) => {
+  try {
+    const idRol_ = getRole(idRol);
+
+    const idUsu = await db.query(queryCreateUser, {
+      replacements: {
+        email,
+        password,
+        idRol: idRol_,
+        idUniversidad,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    return parseInt(idUsu[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};

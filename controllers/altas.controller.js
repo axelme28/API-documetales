@@ -1,39 +1,55 @@
-const { request, response } = require('express');
-const { type, json } = require('express/lib/response');
-const { async } = require('jshint/src/prod-params');
-const { QueryTypes } = require('sequelize');
-const db = require('../config/db.admin.config');
+const { request, response } = require("express");
+const { type, json } = require("express/lib/response");
 
-const {altaAlumno} = require('../modules/altas.modules')
+const { QueryTypes } = require("sequelize");
+const db = require("../config/db.admin.config");
 
-exports.altaUser = async (req, res) => {
+const { queryCreateUniversidad } = require("../sql/querys.plataforma");
 
-    const {
-        typeUser,
-    } = req.body;
+const {
+  altaAlumno,
+  altaProfesor,
+  altaAdmin,
+} = require("../modules/altas.modules");
 
+exports.altaUser = (req = request, res = response) => {
+  const { typeUser } = req.body;
+  console.log(typeUser);
+
+  console.log(req.body);
+  if (typeUser === "alumno") {
     try {
-        switch (typeUser) {
-            case 'alumno':
-
-                await altaAlumno(req, res);
-                break;
-
-            case 'profesor':
-                break;
-            default:
-                break;
-        }
-           
-    }catch (error) {
-        console.log(error);
+      altaAlumno(req, res);
+    } catch (error) {
+      console.log(error);
     }
-    
-
+  }
+  if (typeUser === "profesor") {
+    altaProfesor(req, res);
+  }
+  if (typeUser === "admin") {
+    altaAdmin(req, res);
+  }
 };
 
+exports.altaUniversidad = async (req = request, res = response) => {
+  const { nombre, codigo } = req.body;
 
-    
+  try {
+    const result = await db.query(queryCreateUniversidad, {
+      replacements: {
+        nombre,
+        codigo,
+      },
+      type: QueryTypes.INSERT,
+    });
 
-
-
+    res.status(200).json({
+      ok: true,
+      message: "Universidad creada correctamente",
+      result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
