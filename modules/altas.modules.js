@@ -9,6 +9,7 @@ const {
   queryCreateUser,
   queryCreateProfesor,
   queryCreateAdmin,
+  queryCreateEquipo
 } = require("../sql/querys.plataforma");
 
 exports.altaAlumno = async (req, res) => {
@@ -37,7 +38,6 @@ exports.altaAlumno = async (req, res) => {
       type: QueryTypes.INSERT,
     });
 
-    // console.log(result);
     res.status(200).json({ result });
   } catch (error) {
     console.log(error);
@@ -129,4 +129,22 @@ altaUser = async (email, password, idRol, idUniversidad) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.altaEquipo_ = async (nombre,codigo) => {
+
+  try {
+    const idEquipo = await db.query(queryCreateEquipo, {
+      replacements: {
+        nombre,
+        codigo,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    return parseInt(idEquipo[0]);
+  } catch (error) {
+    console.log(error);
+  }
+
 };

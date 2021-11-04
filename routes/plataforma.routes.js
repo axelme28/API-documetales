@@ -4,6 +4,7 @@ const router = Router();
 const {
   altaUser,
   altaUniversidad,
+  altaEquipo,
 } = require("../controllers/altas.controller");
 
 module.exports = function () {
@@ -12,6 +13,9 @@ module.exports = function () {
 
   //dar de alta a univerdidades
   router.post("/alta-universidad", altaUniversidad);
+
+  //dar de alta grupo
+  router.post("/alta-equipo", altaEquipo);
 
   return router;
 };

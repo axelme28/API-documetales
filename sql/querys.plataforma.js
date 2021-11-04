@@ -12,3 +12,9 @@ exports.queryCreateProfesor =
 
 exports.queryCreateAdmin =
   "call plataforma_educativa.`Crear Administrador`(:nom_admi, :apellido_paterno,:apellido_materno, :idUsuario, :direccion, :telefono);";
+
+exports.queryCreateEquipo = 
+'insert into equipo(id,nom_equipo,codigo_equipo) values (default,:nombre,:codigo);';
+
+exports.queryCreateGrupo = 
+'insert into grupo(id,equipo_id,usuario_id) values(default,:idEquipo,:idDocente)';

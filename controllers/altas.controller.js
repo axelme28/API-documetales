@@ -4,12 +4,13 @@ const { type, json } = require("express/lib/response");
 const { QueryTypes } = require("sequelize");
 const db = require("../config/db.admin.config");
 
-const { queryCreateUniversidad } = require("../sql/querys.plataforma");
+const { queryCreateUniversidad, queryCreateGrupo} = require("../sql/querys.plataforma");
 
 const {
   altaAlumno,
   altaProfesor,
   altaAdmin,
+  altaEquipo_,
 } = require("../modules/altas.modules");
 
 exports.altaUser = (req = request, res = response) => {
@@ -52,4 +53,37 @@ exports.altaUniversidad = async (req = request, res = response) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.altaEquipo = async (req = request, res = response) => {
+  const {
+    nombre,
+    codigo,
+    idDocente,
+  }= req.body;
+
+  try {
+    const idEquipo = await altaEquipo_(nombre,codigo);
+
+    const result = await db.query(queryCreateGrupo, {
+      replacements: {
+        idEquipo,
+        idDocente,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({
+      ok: true,
+      message: "Equipo creado correctamente",
+      result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+
+  
+
+
 };
