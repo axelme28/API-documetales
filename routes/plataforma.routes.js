@@ -1,15 +1,17 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require("express");
+const router = Router();
 
-const {altaUser} = require('../controllers/altas.controller');
-
+const {
+  altaUser,
+  altaUniversidad,
+} = require("../controllers/altas.controller");
 
 module.exports = function () {
-    //dar de alta a susarios: docente, estudiante, admin
-    router.post('/alta-usuario', altaUser());
+  //dar de alta a susarios: docente, estudiante, admin
+  router.post("/alta-usuario", altaUser);
 
-    //dar de alta a univerdidades
-    router.post('/alta-universidad',()=>{});
+  //dar de alta a univerdidades
+  router.post("/alta-universidad", altaUniversidad);
 
-	return router;
+  return router;
 };
