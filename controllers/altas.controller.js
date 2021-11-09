@@ -4,7 +4,11 @@ const { type, json } = require("express/lib/response");
 const { QueryTypes } = require("sequelize");
 const db = require("../config/db.admin.config");
 
-const { queryCreateUniversidad, queryCreateGrupo} = require("../sql/querys.plataforma");
+const {
+  queryCreateUniversidad,
+  queryCreateGrupo,
+  queryExistConvenio,
+} = require("../sql/querys.plataforma");
 
 const {
   altaAlumno,
@@ -34,14 +38,26 @@ exports.altaUser = (req = request, res = response) => {
 };
 
 exports.altaUniversidad = async (req = request, res = response) => {
-  const { nombre, codigo } = req.body;
+  const { nombre, convenio } = req.body;
 
   try {
+    const convenios = await db.query(queryExistConvenio, {
+      type: QueryTypes.SELECT,
+    });
+
+    const existConvenio = convenios
+      .map((item) => item.convenio)
+      .includes(convenio);
+
+    if (existConvenio) {
+      res.status(500).json({
+        ok: false,
+        message: "El convenio ya existe",
+      });
+    }
+
     const result = await db.query(queryCreateUniversidad, {
-      replacements: {
-        nombre,
-        codigo,
-      },
+      replacements: { nombre, convenio },
       type: QueryTypes.INSERT,
     });
 
@@ -52,18 +68,19 @@ exports.altaUniversidad = async (req = request, res = response) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      ok: false,
+      message: "hubo un error. ALV",
+      error,
+    });
   }
 };
 
 exports.altaEquipo = async (req = request, res = response) => {
-  const {
-    nombre,
-    codigo,
-    idDocente,
-  }= req.body;
+  const { nombre, codigo, idDocente } = req.body;
 
   try {
-    const idEquipo = await altaEquipo_(nombre,codigo);
+    const idEquipo = await altaEquipo_(nombre, codigo);
 
     const result = await db.query(queryCreateGrupo, {
       replacements: {
@@ -81,9 +98,4 @@ exports.altaEquipo = async (req = request, res = response) => {
   } catch (error) {
     console.log(error);
   }
-
-
-  
-
-
 };
