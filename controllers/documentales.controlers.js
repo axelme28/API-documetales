@@ -120,35 +120,63 @@ exports.getDocumental = async (req = request, res = response) => {
   }
 };
 
+// exports.logIn = async (req = request, res = response) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const queryLogIn = logIn;
+
+//     const [result] = await db.query(queryLogIn, {
+//       // raw: true,
+//       replacements: {
+//         email,
+//         password,
+//       },
+//       type: db.QueryTypes.SELECT,
+//     });
+
+//     /* Se convierte objeto "TextRow" para trabajar correctamente el objeto que retorna la bd */
+//     let resultToString = JSON.stringify(result["0"]);
+//     let { correo_u, contrasena_u } = JSON.parse(resultToString);
+
+//     const validpass =
+//       password === contrasena_u
+//         ? { validacion: true, data: { correo_u, contrasena_u } }
+//         : { validacion: false, msg: "invalid user or password" };
+
+//     res.status(200).json(validpass);
+//     // // console.log(result);
+//     // console.log();
+//     // console.log(result[0].contrasena_u);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 exports.logIn = async (req = request, res = response) => {
-  const { email, password } = req.body;
+	
+	const {email,password,} = req.body;
 
-  try {
-    const queryLogIn = logIn;
+	try {
+		const queryLogIn = logIn;
 
-    const [result] = await db.query(queryLogIn, {
-      // raw: true,
-      replacements: {
-        email,
-        password,
-      },
-      type: db.QueryTypes.SELECT,
-    });
+		const result = await db.query(queryLogIn,{
+			replacements: {
+				email,
+				password,
+			}, type: db.QueryTypes.POST
+		})
+			
+		const validpass =
+		password === result[0]
+			? { validacion: true }
+				: {msg: 'invalid user or password'};
 
-    /* Se convierte objeto "TextRow" para trabajar correctamente el objeto que retorna la bd */
-    let resultToString = JSON.stringify(result["0"]);
-    let { correo_u, contrasena_u } = JSON.parse(resultToString);
-
-    const validpass =
-      password === contrasena_u
-        ? { validacion: true, data: { correo_u, contrasena_u } }
-        : { validacion: false, msg: "invalid user or password" };
-
-    res.status(200).json(validpass);
-    // // console.log(result);
-    // console.log();
-    // console.log(result[0].contrasena_u);
-  } catch (error) {
-    console.log(error);
-  }
-};
+		res.status(200).json(validpass);
+		// // console.log(result);
+		// console.log();
+		// console.log(result[0].contrasena_u);
+		} catch (error) {
+			console.log(error);
+		}
+}
