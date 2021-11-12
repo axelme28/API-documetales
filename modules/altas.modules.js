@@ -38,7 +38,7 @@ exports.altaAlumno = async (req, res) => {
       type: QueryTypes.INSERT,
     });
 
-    res.status(200).json({ result });
+    res.status(200).json({ result , msg: "Alumno creado correctamente" });
   } catch (error) {
     console.log(error);
   }

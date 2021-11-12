@@ -17,6 +17,14 @@ exports.queryCreateEquipo =
   "insert into equipo(id,nom_equipo,codigo_equipo) values (default,:nombre,:codigo);";
 
 exports.queryCreateGrupo =
-  "insert into grupo(id,equipo_id,usuario_id) values(default,:idEquipo,:idDocente)";
+  "insert into grupo(id,equipo_id,usuario_id) values(default,:idEquipo,:idUsuario)";
 
-exports.queryExistConvenio = `SELECT convenio FROM universidad`;
+exports.queryExistConvenio =
+  `SELECT convenio FROM universidad`;
+
+exports.queryCreatePost =
+  'call plataforma_educativa.`crear publicacion`(:titulo_publicacion, :texto_publicacion, :id_equipo)'
+
+exports.queryViewPosts =  'call plataforma_educativa.`ver-publicaciones`(:id_usuario);'
+
+exports.queryViewTeams = 'call plataforma_educativa.`ver-equipos`(:email);'

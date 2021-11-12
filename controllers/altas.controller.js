@@ -77,7 +77,7 @@ exports.altaUniversidad = async (req = request, res = response) => {
 };
 
 exports.altaEquipo = async (req = request, res = response) => {
-  const { nombre, codigo, idDocente } = req.body;
+  const { nombre, codigo, idUsuario } = req.body;
 
   try {
     const idEquipo = await altaEquipo_(nombre, codigo);
@@ -85,7 +85,7 @@ exports.altaEquipo = async (req = request, res = response) => {
     const result = await db.query(queryCreateGrupo, {
       replacements: {
         idEquipo,
-        idDocente,
+        idUsuario,
       },
       type: QueryTypes.INSERT,
     });
