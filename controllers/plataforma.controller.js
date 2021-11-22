@@ -8,10 +8,10 @@ const { queryCreatePost, queryViewPosts, queryViewTeams } = require("../sql/quer
 
 exports.crearPost = async (req = request, res= require) => {
     const {
-        id_publicacion,
         titulo_publicacion, 
         texto_publicacion, 
         id_equipo,
+        date
     } = req.body;
 
     try {
@@ -20,6 +20,7 @@ exports.crearPost = async (req = request, res= require) => {
                 titulo_publicacion, 
                 texto_publicacion, 
                 id_equipo,
+                date,
             },
             type: QueryTypes.INSERT,
         });
@@ -30,6 +31,7 @@ exports.crearPost = async (req = request, res= require) => {
             result,
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok: false,
             message: "Error al crear post",
@@ -41,6 +43,13 @@ exports.crearPost = async (req = request, res= require) => {
 exports.verPosts = async (req = request, res = response) => {
     const { id_usuario } = req.body;
 
+    //fixme: esto no funciona   {
+    // '0': TextRow {
+    //     titulo: 'tareita',
+    //     texto: 'terea como negro todo el mes',
+    //     date: '0000-00-00'
+    //   }
+    // }
     try {
         const result = await db.query(queryViewPosts, {
             replacements: {

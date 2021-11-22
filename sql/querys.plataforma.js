@@ -23,7 +23,7 @@ exports.queryExistConvenio =
   `SELECT convenio FROM universidad`;
 
 exports.queryCreatePost =
-  'call plataforma_educativa.`crear publicacion`(:titulo_publicacion, :texto_publicacion, :id_equipo)'
+  'call plataforma_educativa.`crear publicacion`(:titulo_publicacion, :texto_publicacion, :id_equipo,:date)'
 
 exports.queryViewPosts =  'call plataforma_educativa.`ver-publicaciones`(:id_usuario);'
 
