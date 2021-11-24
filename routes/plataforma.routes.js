@@ -6,7 +6,7 @@ const {
   altaUniversidad,
   altaEquipo,
 } = require("../controllers/altas.controller");
-const { crearPost, verPosts, verTeam } = require("../controllers/plataforma.controller");
+const { crearPost, verPosts, verTeam,logIn } = require("../controllers/plataforma.controller");
 
 module.exports = function () {
   //dar de alta a susarios: docente, estudiante, admin
@@ -25,6 +25,9 @@ module.exports = function () {
   router.post('/publicaciones',verPosts);
 
   router.post('/ver-grupos',verTeam);
+
+  //servicio para LogIn
+  router.post('/log-in',logIn);
 
   return router;
 };

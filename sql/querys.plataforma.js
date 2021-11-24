@@ -28,3 +28,7 @@ exports.queryCreatePost =
 exports.queryViewPosts =  'call plataforma_educativa.`ver-publicaciones`(:id_usuario);'
 
 exports.queryViewTeams = 'call plataforma_educativa.`ver-equipos`(:email);'
+
+exports.queryLogin = 'select  usuario.id, usuario.email , usuario.`password`, rol.Rolcol, usuario.idUni ' + 
+'from usuario ' +
+'inner join rol on (rol.id_rol = usuario.idRol) where usuario.email = :email';

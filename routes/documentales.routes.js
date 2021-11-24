@@ -15,8 +15,9 @@ module.exports = function () {
     //Servicio para ver un documental
     router.post('/documental-info',getDocumental);
 
-    //servicio para LogIn
-    router.post('/log-in',logIn);
+    
+
+
 
 	return router;
 };
