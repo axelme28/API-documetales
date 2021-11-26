@@ -4,6 +4,11 @@ const { type, json } = require("express/lib/response");
 const { QueryTypes } = require("sequelize");
 const db = require("../config/db.admin.config");
 const {
+  getAlumno,
+  getAdmin,
+  getProfesor,
+} = require("../modules/getUser.Modules");
+const {
   queryCreatePost,
   queryViewPosts,
   queryViewTeams,
@@ -42,13 +47,6 @@ exports.crearPost = async (req = request, res = require) => {
 exports.verPosts = async (req = request, res = response) => {
   const { id_usuario } = req.body;
 
-  //fixme: esto no funciona   {
-  // '0': TextRow {
-  //     titulo: 'tareita',
-  //     texto: 'terea como negro todo el mes',
-  //     date: '0000-00-00'
-  //   }
-  // }
   try {
     const result = await db.query(queryViewPosts, {
       replacements: {
@@ -70,12 +68,12 @@ exports.verPosts = async (req = request, res = response) => {
 };
 
 exports.verTeam = async (req = request, res = response) => {
-  const { email } = req.body;
+  const { idUsuario } = req.body;
 
   try {
     const result = await db.query(queryViewTeams, {
       replacements: {
-        email,
+        idUsuario,
       },
       type: QueryTypes.SELECT,
     });
@@ -133,18 +131,33 @@ exports.logIn = async (req = request, res = response) => {
       type: QueryTypes.SELECT,
     });
 
-	    password === result[0].password && email
-			? res.status(200).json({
-                msg: 'login success',
-                result,  
-            })
-				: res.status(200).json({
-                    msg: 'invalid user or password',
-                    result,  
-                });;
-
-    
+    password === result[0].password && email
+      ? res.status(200).json({
+          msg: "login success",
+          result,
+        })
+      : res.status(200).json({
+          msg: "invalid user or password",
+          result,
+        });
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.getUserInfo = async (req = request, res = response) => {
+  const { typeUser, idUsuario } = req.body;
+
+  if (typeUser === "") {
+    return;
+  }
+  if (typeUser === "alumno") {
+    getAlumno(res, idUsuario);
+  }
+  if (typeUser === "profesor") {
+    getProfesor(res, idUsuario);
+  }
+  if (typeUser === "administrador") {
+    getAdmin(res, idUsuario);
   }
 };

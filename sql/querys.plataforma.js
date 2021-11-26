@@ -27,8 +27,14 @@ exports.queryCreatePost =
 
 exports.queryViewPosts =  'call plataforma_educativa.`ver-publicaciones`(:id_usuario);'
 
-exports.queryViewTeams = 'call plataforma_educativa.`ver-equipos`(:email);'
+exports.queryViewTeams = 'call plataforma_educativa.`ver-equipos`(:idUsuario);'
 
 exports.queryLogin = 'select  usuario.id, usuario.email , usuario.`password`, rol.Rolcol, usuario.idUni ' + 
 'from usuario ' +
 'inner join rol on (rol.id_rol = usuario.idRol) where usuario.email = :email';
+
+exports._getAlumno = 'select * from alumno where idUsu = :idUsuario';
+
+exports._getProfesor = 'select * from docente where idUsu = :idUsuario';
+
+exports._getAdmin = 'select id, nom_admi as "nombre", apellido_paterno, idus as "idUsuario", direccion, telefono, apellido_materno from administrador where idus = :idUsuario';
