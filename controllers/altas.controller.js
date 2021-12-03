@@ -19,9 +19,7 @@ const {
 
 exports.altaUser = (req = request, res = response) => {
   const { typeUser } = req.body;
-  console.log(typeUser);
 
-  console.log(req.body);
   if (typeUser === "alumno") {
     try {
       altaAlumno(req, res);

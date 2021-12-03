@@ -19,22 +19,29 @@ exports.queryCreateEquipo =
 exports.queryCreateGrupo =
   "insert into grupo(id,equipo_id,usuario_id) values(default,:idEquipo,:idUsuario)";
 
-exports.queryExistConvenio =
-  `SELECT convenio FROM universidad`;
+exports.queryExistConvenio = `SELECT convenio FROM universidad`;
 
 exports.queryCreatePost =
-  'call plataforma_educativa.`crear publicacion`(:titulo_publicacion, :texto_publicacion, :id_equipo,:date)'
+  "call plataforma_educativa.`crear publicacion`(:titulo_publicacion, :texto_publicacion, :id_equipo,:date)";
 
-exports.queryViewPosts =  'call plataforma_educativa.`ver-publicaciones`(:id_usuario);'
+exports.queryViewPosts =
+  "call plataforma_educativa.`ver-publicaciones`(:id_usuario, :id_equipo);";
 
-exports.queryViewTeams = 'call plataforma_educativa.`ver-equipos`(:idUsuario);'
+exports.queryViewTeams = "call plataforma_educativa.`ver-equipos`(:idUsuario);";
 
-exports.queryLogin = 'select  usuario.id, usuario.email , usuario.`password`, rol.Rolcol, usuario.idUni ' + 
-'from usuario ' +
-'inner join rol on (rol.id_rol = usuario.idRol) where usuario.email = :email';
+exports.queryLogin =
+  "select  usuario.id, usuario.email , usuario.`password`, rol.Rolcol, usuario.idUni " +
+  "from usuario " +
+  "inner join rol on (rol.id_rol = usuario.idRol) where usuario.email = :email";
 
-exports._getAlumno = 'select * from alumno where idUsu = :idUsuario';
+exports._getAlumno = "select * from alumno where idUsu = :idUsuario";
 
-exports._getProfesor = 'select * from docente where idUsu = :idUsuario';
+exports._getProfesor = "select * from docente where idUsu = :idUsuario";
 
-exports._getAdmin = 'select id, nom_admi as "nombre", apellido_paterno, idus as "idUsuario", direccion, telefono, apellido_materno from administrador where idus = :idUsuario';
+exports._getAdmin =
+  'select id, nom_admi as "nombre", apellido_paterno, idus as "idUsuario", direccion, telefono, apellido_materno from administrador where idus = :idUsuario';
+
+exports._createTask =
+  "call plataforma_educativa.`crear tarea`(:nombre, :instrucciones, :idEquipo, :tipoTarea, :fechaVencimiento)";
+
+exports._viewAllTasks = "call plataforma_educativa.`view-all-task`(:idUsu)";

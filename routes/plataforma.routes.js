@@ -1,12 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-
-const {
-  altaUser,
-  altaUniversidad,
-  altaEquipo,
-} = require("../controllers/altas.controller");
-const { crearPost, verPosts, verTeam,logIn, getUserInfo } = require("../controllers/plataforma.controller");
+//prettier-ignore
+const {altaUser,altaUniversidad,altaEquipo}= require("../controllers/altas.controller");
+//prettier-ignore
+const {crearPost,verPosts,verTeam,logIn,getUserInfo, CreateTask, viewAllTask} = require("../controllers/plataforma.controller");
 
 module.exports = function () {
   //dar de alta a susarios: docente, estudiante, admin
@@ -19,18 +16,27 @@ module.exports = function () {
   router.post("/alta-equipo", altaEquipo);
 
   //crear un post
-  router.post('/crear-publicacion',crearPost);
+  router.post("/crear-publicacion", crearPost);
 
   //ver publicaciones
-  router.post('/publicaciones',verPosts);
+  router.post("/publicaciones", verPosts);
 
-  router.post('/ver-grupos',verTeam);
+  router.post("/ver-grupos", verTeam);
 
   //servicio para LogIn
-  router.post('/log-in',logIn);
+  router.post("/log-in", logIn);
 
   //get user info
-  router.post('/user-info',getUserInfo);
+  router.post("/user-info", getUserInfo);
+
+  //add task
+  router.post("/create-task", CreateTask);
+
+  //get tasks
+  router.post("/get-tasks", viewAllTask);
+
+  //add record to task
+  router.post("/add-record", () => {});
 
   return router;
 };

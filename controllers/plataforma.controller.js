@@ -3,6 +3,7 @@ const { type, json } = require("express/lib/response");
 
 const { QueryTypes } = require("sequelize");
 const db = require("../config/db.admin.config");
+const { getTypeTask } = require("../helpers/getId");
 const {
   getAlumno,
   getAdmin,
@@ -13,6 +14,8 @@ const {
   queryViewPosts,
   queryViewTeams,
   queryLogin,
+  _createTask,
+  _viewAllTasks,
 } = require("../sql/querys.plataforma");
 
 exports.crearPost = async (req = request, res = require) => {
@@ -45,17 +48,18 @@ exports.crearPost = async (req = request, res = require) => {
 };
 
 exports.verPosts = async (req = request, res = response) => {
-  const { id_usuario } = req.body;
+  const { id_usuario, id_equipo } = req.body;
 
   try {
     const result = await db.query(queryViewPosts, {
       replacements: {
         id_usuario,
+        id_equipo,
       },
       type: QueryTypes.SELECT,
     });
 
-    console.log(result);
+    // console.log(result);
     res.status(200).json(result[0]);
   } catch (error) {
     res.status(500).json({
@@ -159,5 +163,60 @@ exports.getUserInfo = async (req = request, res = response) => {
   }
   if (typeUser === "administrador") {
     getAdmin(res, idUsuario);
+  }
+};
+
+exports.CreateTask = async (req = request, res = response) => {
+  const { nombre, instrucciones, idEquipo, tipoTarea, fechaVencimiento } =
+    req.body;
+
+  const typeTask = getTypeTask(tipoTarea);
+
+  try {
+    const result = await db.query(_createTask, {
+      replacements: {
+        nombre,
+        instrucciones,
+        idEquipo,
+        tipoTarea: typeTask,
+        fechaVencimiento,
+      },
+      type: QueryTypes.INSERT,
+    });
+
+    res.status(200).json({
+      ok: true,
+      message: "Tarea creada correctamente",
+      result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      message: "Error al crear tarea",
+      error,
+    });
+  }
+};
+
+exports.viewAllTask = async (req = request, res = response) => {
+  const { idUsu } = req.body;
+
+  try {
+    const result = await db.query(_viewAllTasks, {
+      replacements: {
+        idUsu,
+      },
+      type: QueryTypes.SELECT,
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      message: "Error al obtener tareas",
+      error,
+    });
   }
 };

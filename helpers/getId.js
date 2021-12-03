@@ -65,3 +65,19 @@ exports.getRole = (role = "") => {
       break;
   }
 };
+
+exports.getTypeTask = (typeTask = "") => {
+  let id = 0;
+  switch (typeTask.toLocaleLowerCase().trim()) {
+    case "cuestionario":
+      return (id = 1);
+    case "resumen":
+      return (id = 2);
+    case "informe":
+      return (id = 3);
+    case "critica":
+      return (id = 4);
+    default:
+      break;
+  }
+};
