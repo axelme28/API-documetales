@@ -104,40 +104,11 @@ exports.getDocumental = async (req = request, res = response) => {
       },
       type: db.QueryTypes.POST,
     });
-    // console.log(result);
     res.status(200).json(result[0]);
   } catch (error) {
     console.log(error);
   }
 };
-
-//  exports.logIn = async (req = request, res = response) => {
-//    const { email, password } = req.body;
-//    try {
-//      const queryLogIn = logIn;
-//      const [result] = await db.query(queryLogIn, {
-//        // raw: true,
-//        replacements: {
-//          email,
-//          password,
-//        },
-//        type: db.QueryTypes.SELECT,
-//      });
-//      /* Se convierte objeto "TextRow" para trabajar correctamente el objeto que retorna la bd */
-//      let resultToString = JSON.stringify(result["0"]);
-//      let { correo_u, contrasena_u } = JSON.parse(resultToString);
-//      const validpass =
-//        password === contrasena_u
-//          ? { validacion: true, data: { correo_u, contrasena_u } }
-//          : { validacion: false, msg: "invalid user or password" };
-//      res.status(200).json(validpass);
-//      // // console.log(result);
-//      // console.log();
-//      // console.log(result[0].contrasena_u);
-//    } catch (error) {
-//      console.log(error);
-//    }
-//  };
 
 exports.logIn = async (req = request, res = response) => {
   const { email, password } = req.body;
@@ -158,9 +129,6 @@ exports.logIn = async (req = request, res = response) => {
         : { msg: "invalid user or password" };
 
     res.status(200).json(validpass);
-    // // console.log(result);
-    // console.log();
-    // console.log(result[0].contrasena_u);
   } catch (error) {
     console.log(error);
   }
