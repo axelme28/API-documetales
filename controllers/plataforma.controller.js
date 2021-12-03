@@ -49,7 +49,7 @@ exports.crearPost = async (req = request, res = require) => {
 
 exports.verPosts = async (req = request, res = response) => {
   const { id_usuario, id_equipo } = req.body;
-
+  console.log("=>=>=>=>=>", req.body);
   try {
     const result = await db.query(queryViewPosts, {
       replacements: {
@@ -59,7 +59,7 @@ exports.verPosts = async (req = request, res = response) => {
       type: QueryTypes.SELECT,
     });
 
-    // console.log(result);
+    console.log("RESULT =>=>=>=>", result);
     res.status(200).json(result[0]);
   } catch (error) {
     res.status(500).json({
@@ -93,34 +93,6 @@ exports.verTeam = async (req = request, res = response) => {
     console.log(error);
   }
 };
-
-// exports.logIn = async (req = request, res = response) => {
-//     const { email, password } = req.body;
-//     try {
-//       const queryLogIn = logIn;
-//       const [result] = await db.query(queryLogIn, {
-//         // raw: true,
-//         replacements: {
-//           email,
-//           password,
-//         },
-//         type: db.QueryTypes.SELECT,
-//       });
-//       /* Se convierte objeto "TextRow" para trabajar correctamente el objeto que retorna la bd */
-//       let resultToString = JSON.stringify(result["0"]);
-//       let { correo_u, contrasena_u } = JSON.parse(resultToString);
-//       const validpass =
-//         password === contrasena_u
-//           ? { validacion: true, data: { correo_u, contrasena_u } }
-//           : { validacion: false, msg: "invalid user or password" };
-//       res.status(200).json(validpass);
-//       // // console.log(result);
-//       // console.log();
-//       // console.log(result[0].contrasena_u);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
 
 exports.logIn = async (req = request, res = response) => {
   const { email, password } = req.body;
